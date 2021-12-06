@@ -58,7 +58,7 @@ export const Robots =[
         id:12,
         name:'Gamora',
         email:'Gamora@avenger.buzz'  
-    },
+    }
 
 
 ]

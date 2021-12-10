@@ -1,22 +1,28 @@
 import React,{useState,useEffect} from "react";
+import { connect } from "react-redux";
 import CardList from "../Components/CardList";
 import SearchBox from '../Components/SearchBox';
 import './App.css';
 import ErrorBoundary from "../Components/ErrorBoundary";
 import Scroll from '../Components/Scroll';
+import {setSearchField} from '../actions';
+
 
 
 function App() {
     const [Robots, setRobots] =useState([])
     const [searchfield, setSearchfield] =useState('')
     const [count, setCount]=useState(0)
+    const [createStore]=useState()
 
     useEffect(()=> {
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(response=> response.json())
         .then(users => {setRobots(users)});
+        console.log(createStore)
         console.log(count)
-    },[count]) //only run if count changes.
+    },[count,createStore]) //only run if count changes.
+
 
 
     const onSearchChange = (event)=> {
@@ -40,4 +46,17 @@ function App() {
     );
     }
 
-export default App;
+
+    const mapStateToProps = (state) =>{
+        console.log(state)
+        return{
+            searchField: state.searchField
+        }
+    }
+    const mapDispatchToProps = (dispatch) => {
+        return{
+            onSearchChange:(event) => dispatch(setSearchField(event.target.value))
+        }
+    }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

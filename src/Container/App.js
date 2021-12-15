@@ -9,24 +9,22 @@ import {setSearchField} from '../actions';
 
 
 
-function App() {
+function App(props) {
     const [Robots, setRobots] =useState([])
     const [searchfield, setSearchfield] =useState('')
     const [count, setCount]=useState(0)
-    const [createStore]=useState()
 
     useEffect(()=> {
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(response=> response.json())
         .then(users => {setRobots(users)});
-        console.log(createStore)
         console.log(count)
-    },[count,createStore]) //only run if count changes.
+    },[count]) //only run if count changes.
 
 
 
     const onSearchChange = (event)=> {
-        setSearchfield(event.target.value)
+        props.onSearchChange(event)
     }
 
     const filteredRobots = Robots.filter(Robots=>{

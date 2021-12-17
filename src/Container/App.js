@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useEffect} from "react";
 import { connect } from "react-redux";
 import CardList from "../Components/CardList";
 import SearchBox from '../Components/SearchBox';
@@ -11,13 +11,14 @@ import {requestRobots, setSearchField} from '../actions';
 
 function App(props) {
 
-    const [Robots,setRobots] =useState([])
 
+    const {onRequestRobots,Robots} = props
+
+    console.log(props, 'sdfdsf')
     useEffect(()=> {
-        fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response=> response.json())
-        .then(users => {setRobots(users)});
-    },[]) //only run if count changes.
+       onRequestRobots()
+    },[onRequestRobots]) //only run if count changes.
+
 
 
     const onSearchChange = (event)=> {
@@ -43,10 +44,10 @@ function App(props) {
 
 
     const mapStateToProps = (state) =>{
-        console.log(state)
+        console.log(state, 'domrh')
         return{
             searchField: state.searchRobots.searchField,
-            Robots: state.requestRobots.Robots,
+            Robots: state.requestRobots.robots,
             isPending: state.requestRobots.isPending,
             error: state.requestRobots.error
         }
